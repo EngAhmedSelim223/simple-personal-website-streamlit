@@ -7,10 +7,6 @@ st.set_page_config(
     page_icon=":bar_chart:"
 )
 
-# Initialize session state for navigation
-if 'current_section' not in st.session_state:
-    st.session_state.current_section = 'Home'
-
 # Custom CSS for modern look
 st.markdown("""
     <style>
@@ -40,23 +36,6 @@ st.markdown("""
             text-decoration: none;
             font-weight: 600;
         }
-        .nav-button {
-            background: none;
-            border: none;
-            color: #2c7be5;
-            font-size: 1rem;
-            cursor: pointer;
-            padding: 0.5rem 0;
-            width: 100%;
-            text-align: left;
-        }
-        .nav-button:hover {
-            color: #1a5bb8;
-        }
-        .active-nav {
-            color: #1a5bb8;
-            font-weight: bold;
-        }
         .section-divider {
             margin: 80px 0;
             border-top: 3px solid #2c7be5;
@@ -71,31 +50,24 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Sidebar with clickable navigation
+# Sidebar with navigation
 with st.sidebar:
     st.markdown("## Ahmed Selim")
     st.markdown("**Python Developer & Data Engineer**")
     st.markdown("---")
     
-    # Home button
-    if st.button("🏡 Home", key="home_btn", use_container_width=True):
-        st.session_state.current_section = 'Home'
+    # Navigation links
+    st.markdown("### 🧭 Navigation")
+    st.markdown("[🏡 Home](http://localhost:8501)")
+    st.markdown("[📧 Contact](http://localhost:8502)")
     
-    # Projects button
-    if st.button("💼 Projects", key="projects_btn", use_container_width=True):
-        st.session_state.current_section = 'Projects'
-    
-    st.markdown("[📧 Contact Me](mailto:ahmedselimelsayed@gmail.com)")
     st.markdown("---")
     st.markdown(
         "<div style='font-size:0.9rem; color:#888;'>© 2024 Ahmed Selim</div>",
         unsafe_allow_html=True
     )
-    
-    # Current section indicator
-    st.markdown(f"**Current: {st.session_state.current_section}**")
 
-# Main content - All sections displayed
+# HOME PAGE WITH PROJECTS
 st.markdown("<div style='margin-top: 60px;'></div>", unsafe_allow_html=True)
 
 # HOME SECTION
@@ -124,16 +96,14 @@ with home_container:
             </div>
         """, unsafe_allow_html=True)
         
+        # Quick link to contact
         st.markdown("""
-            <div style="margin-top: 30px;">
-                <a href="mailto:ahmedselimelsayed@gmail.com" class="contact-link">📧 Email Me</a>
+            <div style="margin-top: 30px; text-align: center;">
+                <a href="http://localhost:8502" target="_blank" class="contact-link" style="background: #2c7be5; color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none;">
+                    📧 Contact Me
+                </a>
             </div>
         """, unsafe_allow_html=True)
-        
-        # Quick link to projects
-        if st.button("View My Projects Below 🚀", key="view_projects", use_container_width=True):
-            st.session_state.current_section = 'Projects'
-            st.rerun()
 
 # SECTION DIVIDER
 st.markdown('<div class="section-divider"></div>', unsafe_allow_html=True)
@@ -189,26 +159,6 @@ with projects_container:
     
     except Exception as e:
         st.error(f"Error loading projects: {str(e)}")
-    
-    # Back to home button
-    st.markdown("---")
-    if st.button("↑ Back to Home", key="back_home", use_container_width=True):
-        st.session_state.current_section = 'Home'
-        st.rerun()
 
 # Add some spacing at the bottom
 st.markdown("<div style='margin-bottom: 100px;'></div>", unsafe_allow_html=True)
-
-# Auto-scroll to section based on sidebar selection
-if st.session_state.current_section == 'Projects':
-    st.markdown("""
-        <script>
-            document.getElementById('projects').scrollIntoView({behavior: 'smooth'});
-        </script>
-    """, unsafe_allow_html=True)
-elif st.session_state.current_section == 'Home':
-    st.markdown("""
-        <script>
-            document.getElementById('home').scrollIntoView({behavior: 'smooth'});
-        </script>
-    """, unsafe_allow_html=True)
